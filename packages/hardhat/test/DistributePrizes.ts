@@ -1,3 +1,5 @@
+import * as dotenv from "dotenv";
+dotenv.config();
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { loadFixture } from "@nomicfoundation/hardhat-toolbox/network-helpers";
@@ -8,8 +10,21 @@ import { forgeDiamondAbi } from "./abi/forge_diamond";
 describe("DistributePrizes", function () {
   // We define a fixture to reuse the same setup in every test.
   async function deployDistributePrizesFixture() {
+    const urlAlchemyPolygon = process.env.URL_ALCHEMY_POLYGON;
     const ForgeDiamondAddress = "0x4fDfc1B53Fd1D80d969C984ba7a8CE4c7bAaD442";
     const ForgeDiamondOwnerAddress = "0x01F010a5e001fe9d6940758EA5e8c777885E351e";
+
+    await network.provider.request({
+      method: "hardhat_reset",
+      params: [
+        {
+          forking: {
+            jsonRpcUrl: urlAlchemyPolygon,
+            blockNumber: 61072268,
+          },
+        },
+      ],
+    });
 
     await hre.network.provider.request({
       method: "hardhat_impersonateAccount",
@@ -21,6 +36,11 @@ describe("DistributePrizes", function () {
     const forgeDiamond = await hre.ethers.getContractAt(forgeDiamondAbi, ForgeDiamondAddress);
 
     const [owner] = await ethers.getSigners();
+
+    await network.provider.send("hardhat_setBalance", [
+      ForgeDiamondOwnerAddress,
+      "0x8AC7230489E80000", // 100 matic
+    ]);
 
     forgeDiamond
       .connect(forgeAdmin)
