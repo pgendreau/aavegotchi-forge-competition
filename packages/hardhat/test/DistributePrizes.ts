@@ -31,6 +31,14 @@ describe("DistributePrizes", function () {
       params: ["0x01F010a5e001fe9d6940758EA5e8c777885E351e"],
     });
 
+    const randomRecipients = (amount: number): Address[] => {
+      const recipients: Address[] = [];
+      for (let i = 0; i < amount; i++) {
+        recipients.push(ethers.Wallet.createRandom().address);
+      }
+      return recipients;
+    };
+
     const forgeAdmin = await hre.ethers.getSigner(ForgeDiamondOwnerAddress);
 
     const forgeDiamond = await hre.ethers.getContractAt(forgeDiamondAbi, ForgeDiamondAddress);
@@ -54,11 +62,17 @@ describe("DistributePrizes", function () {
     const distributePrizes = (await distributePrizesFactory.deploy()) as DistributePrizes;
     await distributePrizes.waitForDeployment();
 
-    return { distributePrizes, forgeDiamond, owner };
+    const recipients = randomRecipients(100);
+
+    return { distributePrizes, forgeDiamond, owner, recipients };
   }
 
   it("Should have minted 100 of the first token id", async function () {
     const { forgeDiamond, owner } = await loadFixture(deployDistributePrizesFixture);
     expect(await forgeDiamond.balanceOf(owner.address, 1)).to.equal(100);
+  });
+
+  it("Should be able to distribute all tokens", async function () {
+    const { recipients } = await loadFixture(deployDistributePrizesFixture);
   });
 });
