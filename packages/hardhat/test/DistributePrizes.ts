@@ -6,6 +6,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-toolbox/network-helpers";
 import { DistributePrizes } from "../typechain-types";
 
 import { forgeDiamondAbi } from "./abi/forge_diamond";
+import { distributionData } from "./data/distribution";
 
 describe("DistributePrizes", function () {
   // We define a fixture to reuse the same setup in every test.
@@ -21,6 +22,7 @@ describe("DistributePrizes", function () {
           forking: {
             jsonRpcUrl: urlAlchemyPolygon,
             blockNumber: 61072268,
+            timeout: 1000_000_000_000,
           },
         },
       ],
@@ -62,6 +64,8 @@ describe("DistributePrizes", function () {
     const distributePrizes = (await distributePrizesFactory.deploy()) as DistributePrizes;
     await distributePrizes.waitForDeployment();
 
+    await forgeDiamond.setApprovalForAll(distributePrizes.target, true);
+
     const recipients = randomRecipients(100);
 
     return { distributePrizes, forgeDiamond, owner, recipients };
@@ -72,7 +76,30 @@ describe("DistributePrizes", function () {
     expect(await forgeDiamond.balanceOf(owner.address, 1)).to.equal(100);
   });
 
-  it("Should be able to distribute all tokens", async function () {
-    const { recipients } = await loadFixture(deployDistributePrizesFixture);
+  it("Should be able to distribute one token", async function () {
+    const { forgeDiamond, distributePrizes } = await loadFixture(deployDistributePrizesFixture);
+    const recipient = ethers.Wallet.createRandom().address;
+    await distributePrizes.distribute(forgeDiamond.target, [recipient], [1], [[1]], "0x");
+    expect(await forgeDiamond.balanceOf(recipient, 1)).to.equal(1);
+  });
+
+  it("Should be able to distribute all 50 first tokens", async function () {
+    const { forgeDiamond, distributePrizes, recipients } = await loadFixture(deployDistributePrizesFixture);
+    //const receipt = await tx.wait()
+    //console.log(receipt.logs)
+    const recipientsSubset = recipients.slice(49);
+    const amountsSubset = distributionData.amounts.slice(49);
+    const tx = await distributePrizes.distribute(
+      forgeDiamond.target,
+      recipientsSubset,
+      distributionData.ids,
+      amountsSubset,
+      "0x",
+    );
+    for (let i = 0; i < recipientsSet.length; i++) {
+      for (let j = 0; j < distributionData.ids.length; j++) {
+        expect(await forgeDiamond.balanceOf(recipientsSet[i], distributionData.ids[j])).to.equal(amountsSet[i][j]);
+      }
+    }
   });
 });
