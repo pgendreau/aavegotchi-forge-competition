@@ -12,7 +12,7 @@ interface IERC1155 {
 
 contract DistributePrizes {
     function distribute(IERC1155 token, address[] calldata recipients, uint256[] calldata ids, uint256[][] calldata amounts, bytes calldata data) external {
-        require(token.isApprovedForAll(msg.sender, address(this)), "Sender has not approved disperse contract");
+        require(token.isApprovedForAll(msg.sender, address(this)), "Sender has not approved contract for distribution");
         require(recipients.length == amounts.length, "Invalid input: recipients and amounts must have the sanme number of elements");
 
         for (uint256 i = 0; i < ids.length; i++) {
