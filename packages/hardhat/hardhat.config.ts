@@ -41,10 +41,14 @@ const config: HardhatUserConfig = {
   networks: {
     // View the networks that are pre-configured.
     // If the network you are looking for is not here you can add new network settings
+    localhost: {
+      timeout: 3600000,
+    },
     hardhat: {
       forking: {
         url: `${urlAlchemyPolygon}`,
         enabled: process.env.MAINNET_FORKING_ENABLED === "true",
+        timeout: 3600000,
       },
     },
     mainnet: {
@@ -132,6 +136,9 @@ const config: HardhatUserConfig = {
   },
   sourcify: {
     enabled: false,
+  },
+  mocha: {
+    timeout: 3600000,
   },
 };
 
