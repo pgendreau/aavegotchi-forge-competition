@@ -1,4 +1,4 @@
-export const distributionArgs = {
+export const distributionData = {
   recipients: [
     "0xb9ad10b590bcd2b0db23d0005b2db0d53d9a1cf0",
     "0x5cc81f1afa43f8f3c65fc9ce96d5a0568f4e285f",
