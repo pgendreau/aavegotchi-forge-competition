@@ -83,22 +83,37 @@ describe("DistributePrizes", function () {
     expect(await forgeDiamond.balanceOf(recipient, 1)).to.equal(1);
   });
 
-  it("Should be able to distribute all 50 first tokens", async function () {
+  it("Should be able to distribute all tokens in batch of 20", async function () {
     const { forgeDiamond, distributePrizes, recipients } = await loadFixture(deployDistributePrizesFixture);
-    //const receipt = await tx.wait()
-    //console.log(receipt.logs)
-    const recipientsSubset = recipients.slice(49);
-    const amountsSubset = distributionData.amounts.slice(49);
-    const tx = await distributePrizes.distribute(
-      forgeDiamond.target,
-      recipientsSubset,
-      distributionData.ids,
-      amountsSubset,
-      "0x",
-    );
-    for (let i = 0; i < recipientsSet.length; i++) {
-      for (let j = 0; j < distributionData.ids.length; j++) {
-        expect(await forgeDiamond.balanceOf(recipientsSet[i], distributionData.ids[j])).to.equal(amountsSet[i][j]);
+    const indexes = [0, 20, 40, 60, 80];
+    for (const idx of indexes) {
+      const recipientsSubset = recipients.slice(idx, idx + 19);
+      const amountsSubset = distributionData.amounts.slice(idx, idx + 19);
+
+      //console.log(
+      //  forgeDiamond.target,
+      //  recipientsSubset,
+      //  distributionData.ids,
+      //  amountsSubset,
+      //  "0x",
+      //);
+      //const tx = await distributePrizes.distribute(
+      await distributePrizes.distribute(
+        forgeDiamond.target,
+        recipientsSubset,
+        distributionData.ids,
+        amountsSubset,
+        "0x",
+      );
+      //const receipt = await tx.wait();
+      //console.log(receipt.logs);
+      for (let i = 0; i < recipientsSubset.length; i++) {
+        for (let j = 0; j < distributionData.ids.length; j++) {
+          //console.log(recipientsSubset[i], distributionData.ids[j], await forgeDiamond.balanceOf(recipientsSubset[i], distributionData.ids[j]));
+          expect(await forgeDiamond.balanceOf(recipientsSubset[i], distributionData.ids[j])).to.equal(
+            amountsSubset[i][j],
+          );
+        }
       }
     }
   });
