@@ -12,8 +12,8 @@ interface IERC1155 {
 
 /// @title Distribute Prizes for Aavegotchi Forge competition
 /// @author PG
-/// @notice Manage prizes distribution for Aavegotchi Forge competition
-/// @dev The contract is permissionless and has no owner, it can be used to distribute any erc1155 token
+/// @notice The contract is permissionless and has no owner, it can be used to distribute any erc1155 token
+/// @dev Does some sanity checks and optimize for gas
 contract DistributePrizes {
   
     /// @dev Emitted when tokens are distributed
@@ -32,7 +32,7 @@ contract DistributePrizes {
 
     /// @notice Batch send NFTs to recipients
     /// @dev Reverts the whole transaction if initial balance is insufficient. To allow for this 
-    ///      all amounts need to have the same length as ids to allow for
+    ///      all amounts need to have the same length as ids (including 0s)
     /// @param token The address of the IERC1155 token contract that will be used for distribution
     /// @param recipients An array of addresses that will receive the tokens
     /// @param ids An array of token IDs that will be distributed

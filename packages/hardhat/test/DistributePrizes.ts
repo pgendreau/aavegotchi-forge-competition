@@ -8,6 +8,7 @@ import { DistributePrizes } from "../typechain-types";
 import { forgeDiamondAbi } from "./abi/forge_diamond";
 import { distributionData } from "./data/distribution";
 
+// initial ids/amounts to mint to test the distribution
 const mintIds = [1, 2, 3, 4, 5, 6, 21, 7, 8, 9, 10, 11, 13, 14];
 const mintAmounts = [100, 100, 100, 50, 50, 50, 50, 25, 25, 25, 10, 10, 5, 5];
 
