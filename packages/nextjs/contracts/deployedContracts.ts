@@ -10,6 +10,43 @@ const deployedContracts = {
       address: "0x75c7682e6B360D9Be01B2588061125ab911F00C2",
       abi: [
         {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "contract IERC1155",
+              name: "token",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "sender",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "recipient",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256[]",
+              name: "ids",
+              type: "uint256[]",
+            },
+            {
+              indexed: false,
+              internalType: "uint256[]",
+              name: "amounts",
+              type: "uint256[]",
+            },
+          ],
+          name: "TokensDistributed",
+          type: "event",
+        },
+        {
           inputs: [
             {
               internalType: "contract IERC1155",
