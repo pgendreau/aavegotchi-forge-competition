@@ -138,7 +138,7 @@ describe("DistributePrizes", function () {
         amountsSubset,
         "0x",
       );
-      // check that balance of each recipient for each id after sending batch
+      // check balance of each recipient for each id after sending batch
       for (let i = 0; i < recipientsSubset.length; i++) {
         for (let j = 0; j < distributionData.ids.length; j++) {
           expect(await forgeDiamond.balanceOf(recipientsSubset[i], distributionData.ids[j])).to.equal(

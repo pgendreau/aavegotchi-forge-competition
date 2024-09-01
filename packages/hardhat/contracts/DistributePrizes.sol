@@ -1,9 +1,6 @@
 //SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity ^0.8.17;
 
-// Useful for debugging. Remove when deploying to a live network.
-import "hardhat/console.sol";
-
 interface IERC1155 {
     function balanceOf(address _owner, uint256 _id) external view returns (uint256);
     function isApprovedForAll(address _owner, address _operator) external view returns (bool);
@@ -80,8 +77,6 @@ contract DistributePrizes {
                         index++;
                     }
                 }
-                console.log("sending for: %s", recipients[i]);
-                // transfer all tokens for one recipient each time
                 token.safeBatchTransferFrom(msg.sender, recipients[i], recIds, recAmounts, data);
                 emit TokensDistributed(token, msg.sender, recipients[i], recIds, recAmounts);
             }
