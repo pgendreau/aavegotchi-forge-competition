@@ -1,69 +1,96 @@
 "use client";
 
-import Link from "next/link";
-import type { NextPage } from "next";
-import { useAccount } from "wagmi";
-import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { Address } from "~~/components/scaffold-eth";
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { request } from "graphql-request";
+import { NextPage } from "next";
+import { GotchisByIdQuery } from "~~/graphql/aavegotchis/__generated__/graphql";
+import { gotchisByIdQueryDocument } from "~~/graphql/aavegotchis/queries/gotchis";
+import { LeaderboardQuery } from "~~/graphql/forge/__generated__/graphql";
+import { leaderboardQueryDocument } from "~~/graphql/forge/queries/smithoors";
+import { GotchiEntry } from "~~/types/gotchiEntry";
 
 const Home: NextPage = () => {
-  const { address: connectedAddress } = useAccount();
+  const [skip, setSkip] = useState<number>(0);
+  const [gotchiEntries, setGotchiEntries] = useState<GotchiEntry[]>([]);
+
+  const leaderboardEntries = useQuery<LeaderboardQuery>({
+    queryKey: ['leaderboard', skip],
+    queryFn: async (): Promise<LeaderboardQuery> => {
+      const smithoors = await request(process.env.NEXT_PUBLIC_FORGE_SUBGRAPH, leaderboardQueryDocument, {
+        first: 50,
+        skip: skip,
+      });
+      return smithoors as LeaderboardQuery;
+    },
+  });
+
+  const ids = leaderboardEntries.data?.gotchis.map(gotchi => gotchi.id);
+  const gotchis = useQuery<GotchisByIdQuery>({
+    queryKey: ['gotchisById', ids],
+    queryFn: async (): Promise<GotchisByIdQuery> => {
+      const gotchis = await request(process.env.NEXT_PUBLIC_AAVEGOTCHI_SUBGRAPH, gotchisByIdQueryDocument, {
+        ids: ids,
+      });
+      return gotchis as GotchisByIdQuery;
+    },
+  });
+
+  useEffect(() => {
+    // We consolidate data here after each change in the queriies results
+    const data = leaderboardEntries.data?.gotchis.map(gotchi => {
+      const gotchiData = gotchis.data?.aavegotchis.find(aavegotchi => aavegotchi.id === gotchi.id);
+      return {
+        id: gotchi.id,
+        smithingLevel: gotchi.smithingLevel,
+        skillPoints: gotchi.skillPoints,
+        name: gotchiData?.name ?? "",
+        owner: gotchiData?.owner?.id ?? "",
+        totalItemsForged: gotchi.totalItemsForged as number,
+        totalItemsSmelted: gotchi.totalItemsSmelted as number,
+        lastForged: gotchi?.itemsForged && (gotchi?.itemsForged[0]?.timestamp as number),
+      } as GotchiEntry;
+    });
+    // Sort the data by skillPoints and lastForged.
+    // If skillPoints are the same, we sort by lastForged
+    data?.sort((a, b) => {
+      if (b.skillPoints === a.skillPoints) {
+        return (b.lastForged ?? 999999999) - (a.lastForged ?? 999999999);
+      }
+      return b.skillPoints - a.skillPoints;
+    });
+    data && setGotchiEntries(data);
+  }, [leaderboardEntries.data, gotchis.data]);
 
   return (
     <>
-      <div className="flex items-center flex-col flex-grow pt-10">
-        <div className="px-5">
-          <h1 className="text-center">
-            <span className="block text-2xl mb-2">Welcome to</span>
-            <span className="block text-4xl font-bold">Scaffold-ETH 2</span>
-          </h1>
-          <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
-            <p className="my-2 font-medium">Connected Address:</p>
-            <Address address={connectedAddress} />
-          </div>
-          <p className="text-center text-lg">
-            Get started by editing{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/nextjs/app/page.tsx
-            </code>
-          </p>
-          <p className="text-center text-lg">
-            Edit your smart contract{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              YourContract.sol
-            </code>{" "}
-            in{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/hardhat/contracts
-            </code>
-          </p>
-        </div>
+      <h1>Smithoors Leaderboard</h1>
+      <h3>Hello Smithoors</h3>
+      <table className="table-auto">
+        <thead>
+          <tr>
+            <th>Gotchi ID</th>
+            <th>Name</th>
+            <th>Level</th>
+            <th>Points</th>
+            <th>Owner</th>
+          </tr>
+        </thead>
+        <tbody>
+          {gotchiEntries.map(gotchi => (
+            <tr key={gotchi.id}>
+              <td>{gotchi.id}</td>
+              <td>{gotchi.name}</td>
+              <td>{gotchi.smithingLevel}</td>
+              <td>{gotchi.skillPoints}</td>
+              <td>{gotchi.owner}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
-        <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
-          <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <BugAntIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Tinker with your smart contract using the{" "}
-                <Link href="/debug" passHref className="link">
-                  Debug Contracts
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Explore your local transactions with the{" "}
-                <Link href="/blockexplorer" passHref className="link">
-                  Block Explorer
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      {gotchiEntries.length === 50 && <button onClick={() => setSkip(skip + 50)}>Next</button>}
+      {skip >= 50 && <button onClick={() => setSkip(skip - 50)}>Previous</button>}
     </>
   );
 };

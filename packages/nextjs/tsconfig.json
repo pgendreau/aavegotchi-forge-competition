@@ -20,6 +20,19 @@
     "plugins": [
       {
         "name": "next"
+      },
+      {
+        "name": "@no-co/graphqlsp",
+        "schema": [
+          {
+            "url": "./graphql/forge/schema.graphql",
+            "tadaOutputLocation": "./graphql/forge/graphql-env.d.ts"
+          },
+          {
+            "url": "./graphql/aavegotchis/schema.graphql",
+            "tadaOutputLocation": "./graphql/aavegotchis/graphql-env.d.ts"
+          }
+        ] 
       }
     ]
   },
