@@ -30,3 +30,9 @@ p {
 .btn.btn-ghost {
   @apply shadow-none;
 }
+
+.url {
+  @apply hover:underline hover:text-frame;
+}
+
+

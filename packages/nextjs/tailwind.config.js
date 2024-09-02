@@ -2,8 +2,8 @@
 module.exports = {
   content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}", "./utils/**/*.{js,ts,jsx,tsx}"],
   plugins: [require("daisyui")],
-  darkTheme: "dark",
-  darkMode: ["selector", "[data-theme='dark']"],
+  darkTheme: "light",
+  // darkMode: ["selector", "[data-theme='dark']"],
   // DaisyUI theme colors
   daisyui: {
     themes: [
@@ -25,8 +25,7 @@ module.exports = {
           success: "#34EEB6",
           warning: "#FFCF72",
           error: "#FF8863",
-          "gr-top": '#1a1932',
-          "gr-bottom": '#0e071b',
+          frame: "#0098dc",
 
           "--rounded-btn": "9999rem",
 
@@ -59,8 +58,7 @@ module.exports = {
           success: "#34EEB6",
           warning: "#FFCF72",
           error: "#FF8863",
-          "gr-top": '#1a1932',
-          "gr-bottom": '#0e071b',
+          frame: "#0098dc",
 
           "--rounded-btn": "9999rem",
 
@@ -89,10 +87,9 @@ module.exports = {
       animation: {
         "pulse-fast": "pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
+      colors: {
+        frame: "#0098dc",
+      }
     },
-    colors: {
-      bgtop: '#1a1932',
-      bgbottom: '#0e071b'
-    }
   },
 };

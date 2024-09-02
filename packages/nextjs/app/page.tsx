@@ -4,6 +4,13 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { request } from "graphql-request";
 import { NextPage } from "next";
+import Button from "~~/components/layout/Button";
+import { Footer } from "~~/components/layout/Footer";
+import { Header } from "~~/components/layout/Header";
+import { Ttable } from "~~/components/layout/table/Ttable";
+import { Ttd } from "~~/components/layout/table/Ttd";
+import { Tth } from "~~/components/layout/table/Tth";
+import { Address } from "~~/components/scaffold-eth";
 import { GotchisByIdQuery } from "~~/graphql/aavegotchis/__generated__/graphql";
 import { gotchisByIdQueryDocument } from "~~/graphql/aavegotchis/queries/gotchis";
 import { LeaderboardQuery } from "~~/graphql/forge/__generated__/graphql";
@@ -15,7 +22,7 @@ const Home: NextPage = () => {
   const [gotchiEntries, setGotchiEntries] = useState<GotchiEntry[]>([]);
 
   const leaderboardEntries = useQuery<LeaderboardQuery>({
-    queryKey: ['leaderboard', skip],
+    queryKey: ["leaderboard", skip],
     queryFn: async (): Promise<LeaderboardQuery> => {
       const smithoors = await request(process.env.NEXT_PUBLIC_FORGE_SUBGRAPH, leaderboardQueryDocument, {
         first: 50,
@@ -27,7 +34,7 @@ const Home: NextPage = () => {
 
   const ids = leaderboardEntries.data?.gotchis.map(gotchi => gotchi.id);
   const gotchis = useQuery<GotchisByIdQuery>({
-    queryKey: ['gotchisById', ids],
+    queryKey: ["gotchisById", ids],
     queryFn: async (): Promise<GotchisByIdQuery> => {
       const gotchis = await request(process.env.NEXT_PUBLIC_AAVEGOTCHI_SUBGRAPH, gotchisByIdQueryDocument, {
         ids: ids,
@@ -64,33 +71,42 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <h1>Smithoors Leaderboard</h1>
-      <h3>Hello Smithoors</h3>
-      <table className="table-auto">
-        <thead>
+      <Header />
+      <Ttable>
+        <thead className="border-2 border-frame">
           <tr>
-            <th>Gotchi ID</th>
-            <th>Name</th>
-            <th>Level</th>
-            <th>Points</th>
-            <th>Owner</th>
+            <Tth>Rank</Tth>
+            <Tth>Name</Tth>
+            <Tth>Level</Tth>
+            <Tth>Points</Tth>
+            <Tth>Owner</Tth>
           </tr>
         </thead>
-        <tbody>
-          {gotchiEntries.map(gotchi => (
-            <tr key={gotchi.id}>
-              <td>{gotchi.id}</td>
-              <td>{gotchi.name}</td>
-              <td>{gotchi.smithingLevel}</td>
-              <td>{gotchi.skillPoints}</td>
-              <td>{gotchi.owner}</td>
+        <tbody className="border-2 border-frame">
+          {gotchiEntries.map((gotchi, index) => (
+            <tr key={gotchi.id} className="border-y border-y-slate-700">
+              <Ttd>{skip + index + 1}</Ttd>
+              <Ttd>{gotchi.name}</Ttd>
+              <Ttd>{gotchi.smithingLevel}</Ttd>
+              <Ttd>{gotchi.skillPoints}</Ttd>
+              <Ttd>
+                <Address
+                  address={gotchi.owner}
+                  disableAddressLink
+                  format="short"
+                  size="lg"
+                  disableAddressCopy
+                ></Address>
+              </Ttd>
             </tr>
           ))}
         </tbody>
-      </table>
-
-      {gotchiEntries.length === 50 && <button onClick={() => setSkip(skip + 50)}>Next</button>}
-      {skip >= 50 && <button onClick={() => setSkip(skip - 50)}>Previous</button>}
+      </Ttable>
+      <div className="flex flex-row gap-x-1 pt-3">
+        {skip >= 50 && <Button onClick={() => setSkip(skip - 50)}>Previous</Button>}
+        {gotchiEntries.length === 50 && <Button onClick={() => setSkip(skip + 50)}>Next</Button>}
+      </div>
+      <Footer />
     </>
   );
 };
