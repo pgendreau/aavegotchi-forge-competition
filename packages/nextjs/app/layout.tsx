@@ -1,10 +1,10 @@
 "use client";
 
+import localFont from "@next/font/local";
 import "@rainbow-me/rainbowkit/styles.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "~~/components/ThemeProvider";
 import "~~/styles/globals.css";
-import localFont from '@next/font/local'
 
 // export const metadata = getMetadata({
 //   title: "Smithoors leaderboard",
@@ -12,12 +12,14 @@ import localFont from '@next/font/local'
 // });
 
 const pixelar = localFont({
-  src: [{
-    path: '../public/fonts/pixelar.woff2',
-    weight: 'normal',
-  }],
-  variable: '--pixelar'
-})
+  src: [
+    {
+      path: "../public/fonts/pixelar.woff2",
+      weight: "normal",
+    },
+  ],
+  variable: "--pixelar",
+});
 
 const queryClient = new QueryClient();
 
