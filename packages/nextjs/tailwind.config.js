@@ -25,6 +25,8 @@ module.exports = {
           success: "#34EEB6",
           warning: "#FFCF72",
           error: "#FF8863",
+          "gr-top": '#1a1932',
+          "gr-bottom": '#0e071b',
 
           "--rounded-btn": "9999rem",
 
@@ -57,6 +59,8 @@ module.exports = {
           success: "#34EEB6",
           warning: "#FFCF72",
           error: "#FF8863",
+          "gr-top": '#1a1932',
+          "gr-bottom": '#0e071b',
 
           "--rounded-btn": "9999rem",
 
@@ -86,5 +90,9 @@ module.exports = {
         "pulse-fast": "pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
     },
+    colors: {
+      bgtop: '#1a1932',
+      bgbottom: '#0e071b'
+    }
   },
 };

@@ -25,17 +25,17 @@ const queryClient = new QueryClient();
 
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html suppressHydrationWarning className={`${pixelar.variable} font-sans`}>
+    <html suppressHydrationWarning className={`${pixelar.variable} font-sans `}>
       <body>
-        <QueryClientProvider client={queryClient}>
-          <ThemeProvider enableSystem>
-            <div className="flex flex-col min-h-screen justify-between bg-purple-950  text-white font-katin font-medium">
+        <ThemeProvider enableSystem>
+          <QueryClientProvider client={queryClient}>
+            <div className="flex flex-col min-h-screen justify-between text-white font-medium bg-gradient-to-t from-[#1a1932] to-[#0e071b]">
               <div className="container mx-auto mb-auto md:pt-20 pt-10">
                 <div className="mx-5">{children}</div>
               </div>
             </div>
-          </ThemeProvider>
-        </QueryClientProvider>
+          </QueryClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
