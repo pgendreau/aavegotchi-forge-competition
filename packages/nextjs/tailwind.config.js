@@ -76,6 +76,9 @@ module.exports = {
   },
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--pixelar)']
+      },
       boxShadow: {
         center: "0 0 12px -2px rgb(0 0 0 / 0.05)",
       },

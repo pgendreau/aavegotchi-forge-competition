@@ -1,0 +1,5 @@
+@font-face {
+    font-family: "PixelarRegularW01-Regular"; 
+    src: url("/src/assets/styles/fonts/b2e75c336df191233b3096682c9ee6be.woff2") format("woff2"), 
+         url("/src/assets/styles/fonts/b2e75c336df191233b3096682c9ee6be.woff") format("woff");
+}

@@ -2652,6 +2652,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@next/font@npm:^14.2.7":
+  version: 14.2.7
+  resolution: "@next/font@npm:14.2.7"
+  peerDependencies:
+    next: "*"
+  checksum: c5c010e3b6f023e381d9b9f323c2df7655f9e97371db38d6fe2a7644fef525b72afdf4bdb3ba3f66b8b7c87c4fd21452dbcc0977d3200f4502ec387bd5e90d0a
+  languageName: node
+  linkType: hard
+
 "@next/swc-darwin-arm64@npm:14.0.4":
   version: 14.0.4
   resolution: "@next/swc-darwin-arm64@npm:14.0.4"
@@ -3711,6 +3720,7 @@ __metadata:
     "@graphql-codegen/cli": ^5.0.2
     "@graphql-codegen/schema-ast": ^4.1.0
     "@heroicons/react": ^2.0.11
+    "@next/font": ^14.2.7
     "@parcel/watcher": ^2.4.1
     "@rainbow-me/rainbowkit": 2.1.2
     "@tanstack/react-query": ^5.28.6
