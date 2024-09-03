@@ -1,3 +1,5 @@
+import { Item } from "./items";
+
 export type GotchiEntry = {
   id: string;
   totalItemsForged: number;
@@ -7,4 +9,5 @@ export type GotchiEntry = {
   name: string;
   owner: string;
   lastForged: number | undefined;
+  rewards?: Item[];
 };

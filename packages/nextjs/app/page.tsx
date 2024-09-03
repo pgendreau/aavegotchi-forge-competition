@@ -43,7 +43,7 @@ const Home: NextPage = () => {
   });
 
   useEffect(() => {
-    // We consolidate data here after each change in the queriies results
+    // We consolidate data here after each change in the queries resultsq
     const data = leaderboardEntries.data?.gotchis.map(gotchi => {
       const gotchiData = gotchis.data?.aavegotchis.find(aavegotchi => aavegotchi.id === gotchi.id);
       return {

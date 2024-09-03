@@ -89,7 +89,19 @@ module.exports = {
       },
       colors: {
         frame: "#0098dc",
+        common: '#7e69fa',
+        uncommon: '#99dbe5',
+        rare: '#59bcff',
+        legendary: '#ffc36b',
+        mythical: '#ff96ff',
       }
     },
   },
+  safelist: [
+    "text-common",
+    "text-uncommon",
+    "text-rare",
+    "text-legendary",
+    "text-mythical",
+  ]
 };

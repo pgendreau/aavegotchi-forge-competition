@@ -1,7 +1,7 @@
 "use client";
 
 import localFont from "@next/font/local";
-import { lightTheme, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { RainbowKitProvider, lightTheme } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
@@ -36,20 +36,18 @@ const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
         {/* <ThemeProvider enableSystem> */}
         <WagmiProvider config={wagmiConfig}>
           <QueryClientProvider client={queryClient}>
-            1<RainbowKitProvider
-              avatar={BlockieAvatar}
-              theme={lightTheme()}
-            >
-            <div className="flex flex-col min-h-screen justify-center text-lg text-white font-medium bg-gradient-to-t from-[#1a1932] to-[#0e071b]">
-              <div className="container-md mx-auto mb-auto pt-10">
-                <div className="mx-5">
-                  <Header />
-                  <NavBar />
-                  {children}
-                  <Footer />
+            1
+            <RainbowKitProvider avatar={BlockieAvatar} theme={lightTheme()}>
+              <div className="flex flex-col min-h-screen justify-center text-lg text-white font-medium bg-gradient-to-t from-[#1a1932] to-[#0e071b]">
+                <div className="container-md mb-auto pt-10 mx-1 md:mx-10 lg:mx-auto">
+                  <div className="mx-5">
+                    <Header />
+                    <NavBar />
+                    {children}
+                    <Footer />
+                  </div>
                 </div>
               </div>
-            </div>
             </RainbowKitProvider>
           </QueryClientProvider>
         </WagmiProvider>
