@@ -37,11 +37,11 @@ export type s1Reward = [
 export const getS1RewardsMatrix = (): s1Reward[] => {
   const response: s1Reward[] = [];
   // First 5 takes all rewards
-  for (let i = 0; i < 5; i++) response.push(generateReward(0));
+  for (let i = 0; i < 5; i++) response.push(generateReward(14));
   // Next 5 takes 2 less reward
-  for (let i = 5; i < 10; i++) response.push(generateReward(2));
+  for (let i = 5; i < 10; i++) response.push(generateReward(12));
   // Next 15 takes 4 less reward
-  for (let i = 10; i < 25; i++) response.push(generateReward(4));
+  for (let i = 10; i < 25; i++) response.push(generateReward(10));
   // next 25 takes 7 less reward
   for (let i = 25; i < 50; i++) response.push(generateReward(7));
   // next 50 takes 11 less reward
@@ -66,7 +66,7 @@ const generateReward = (nbReward: number): s1Reward => {
     false,
     false,
   ];
-  for (let i = nbReward; i < 14; i++) reward[i] = true;
+  for (let i = 0; i < nbReward; i++) reward[i] = true;
   return reward;
 };
 

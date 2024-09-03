@@ -1,20 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useQuery } from "@tanstack/react-query";
 import { request } from "graphql-request";
-import { Loader } from "~~/components/layout/Loader";
-import { ListItem } from "~~/components/pages/season/ListItem";
-import { getRewardsFromMatrix, getS1RewardsMatrix } from "~~/consts/rewards";
+import { getS1RewardsMatrix } from "~~/consts/rewards";
 import { GotchisByIdAndBlockQuery } from "~~/graphql/aavegotchis/__generated__/graphql";
 import { gotchisByIdAndBlockQueryDocument } from "~~/graphql/aavegotchis/queries/gotchis";
 import { LeaderboardByBlockQuery } from "~~/graphql/forge/__generated__/graphql";
 import { leaderboardQueryByBlockDocument } from "~~/graphql/forge/queries/smithoors";
 import { GotchiEntry } from "~~/types/gotchiEntry";
 
-const Season1 = () => {
+const Distribute = () => {
   const [blockNumber, setBlockNumber] = useState<number>(0);
-
   useQuery<{ jsonrpc: string; id: number; result: string }>({
     queryKey: ["polygon_block"],
     queryFn: async () => {
@@ -37,7 +35,7 @@ const Season1 = () => {
     },
   });
 
-  const [gotchiEntries, setGotchiEntries] = useState<GotchiEntry[]>([]);
+  const [gotchiEntries, setGotchiEntries] = useState<GotchiEntry[][]>([]);
   const leaderboardEntries = useQuery<LeaderboardByBlockQuery>({
     queryKey: ["leaderboard", blockNumber],
     queryFn: async (): Promise<LeaderboardByBlockQuery> => {
@@ -64,7 +62,7 @@ const Season1 = () => {
 
   useEffect(() => {
     // We consolidate data here after each change in the queries results
-    const s1Rewards = getS1RewardsMatrix();
+    const rewardsMatrix = getS1RewardsMatrix();
     const data = leaderboardEntries.data?.gotchis.map((gotchi, index) => {
       const gotchiData = gotchis.data?.aavegotchis.find(aavegotchi => aavegotchi.id === gotchi.id);
       return {
@@ -76,7 +74,7 @@ const Season1 = () => {
         totalItemsForged: gotchi.totalItemsForged as number,
         totalItemsSmelted: gotchi.totalItemsSmelted as number,
         lastForged: gotchi?.itemsForged && (gotchi?.itemsForged[0]?.timestamp as number),
-        rewards: getRewardsFromMatrix(s1Rewards[index]),
+        rewardsMatrix: rewardsMatrix[index],
       } as GotchiEntry;
     });
     // Sort the data by skillPoints and lastForged.
@@ -87,24 +85,39 @@ const Season1 = () => {
       }
       return b.skillPoints - a.skillPoints;
     });
-    data && setGotchiEntries(data);
+    // Split data in 5 arrays of 20
+    // As we can't do all in one tx.
+    data &&
+      setGotchiEntries([
+        data.slice(0, 20),
+        data.slice(20, 40),
+        data.slice(40, 60),
+        data.slice(60, 80),
+        data.slice(80, 100),
+      ]);
   }, [leaderboardEntries.data, gotchis.data]);
 
   return (
-    <>
-      {leaderboardEntries.isLoading || gotchis.isLoading ? (
-        <div className="flex flex-row justify-center">
-          <Loader />
-        </div>
-      ) : (
-        <ul className="w-full lg:w-[48rem]">
-          {gotchiEntries.map((gotchiEntry, index) => (
-            <ListItem key={index} item={gotchiEntry} index={index} />
-          ))}
-        </ul>
-      )}
-    </>
+    <div>
+      <h2 className="text-4xl">Season 1 rewards distribution</h2>
+      <p>Block used for snapshot: {process.env.NEXT_PUBLIC_SNAPSHOT_BLOCK_NUMBER}</p>
+      <ConnectButton />
+      <div className="flex flex-col gap-y-1 font-kanit font-2xl">
+        {gotchiEntries.map((entries, index) => (
+          <>
+            <p className="text-4xl">Tx {index + 1}</p>
+            <ul>
+              {entries.map(entry => (
+                <li key={entry.id}>
+                  {entry.owner}, {entry.rewardsMatrix?.map(i => (i ? "1" : "0")).join(", ")}
+                </li>
+              ))}
+            </ul>
+          </>
+        ))}
+      </div>
+    </div>
   );
 };
 
-export default Season1;
+export default Distribute;

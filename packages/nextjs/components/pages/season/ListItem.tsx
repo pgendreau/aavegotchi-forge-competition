@@ -13,7 +13,7 @@ export const ListItem = (props: { item: GotchiEntry; index: number }) => {
           <div className="px-1">Rank {props.index + 1}</div>
           <div>{props.item.name}</div>
           <div>{props.item.skillPoints} Points</div>
-          <div className="col-span-3 md:col-span-1">
+          <div className="col-span-3 md:col-span-1 pt-1">
             <Button onClick={() => setIsOpen(!isOpen)}>{isOpen ? "Hide Rewards" : "Show rewards"}</Button>
           </div>
         </div>

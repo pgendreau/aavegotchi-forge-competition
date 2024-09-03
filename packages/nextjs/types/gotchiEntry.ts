@@ -1,4 +1,5 @@
 import { Item } from "./items";
+import { s1Reward } from "~~/consts/rewards";
 
 export type GotchiEntry = {
   id: string;
@@ -10,4 +11,5 @@ export type GotchiEntry = {
   owner: string;
   lastForged: number | undefined;
   rewards?: Item[];
+  rewardsMatrix?: s1Reward;
 };

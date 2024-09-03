@@ -36,7 +36,6 @@ const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
         {/* <ThemeProvider enableSystem> */}
         <WagmiProvider config={wagmiConfig}>
           <QueryClientProvider client={queryClient}>
-            1
             <RainbowKitProvider avatar={BlockieAvatar} theme={lightTheme()}>
               <div className="flex flex-col min-h-screen justify-center text-lg text-white font-medium bg-gradient-to-t from-[#1a1932] to-[#0e071b]">
                 <div className="container-md mb-auto pt-10 mx-1 md:mx-10 lg:mx-auto">
