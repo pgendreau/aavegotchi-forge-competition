@@ -14,3 +14,18 @@ export const gotchisByIdQueryDocument = graphql(/* GraphQl */ `
     }
   }
 `);
+
+export const gotchisByIdAndBlockQueryDocument = graphql(/* GraphQl */ `
+  query gotchisByIdAndBlock($ids: [ID!], $block: Int) {
+    aavegotchis(where: { id_in: $ids }, block: { number: $block }) {
+      id
+      name
+      owner {
+        id
+      }
+      originalOwner {
+        id
+      }
+    }
+  }
+`);

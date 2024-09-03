@@ -14,6 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  query gotchisById($ids: [ID!]) {\n    aavegotchis(where: { id_in: $ids }) {\n      id\n      name\n      owner {\n        id\n      }\n      originalOwner {\n        id\n      }\n    }\n  }\n": types.GotchisByIdDocument,
+    "\n  query gotchisByIdAndBlock($ids: [ID!], $block: Int) {\n    aavegotchis(where: { id_in: $ids }, block: { number: $block }) {\n      id\n      name\n      owner {\n        id\n      }\n      originalOwner {\n        id\n      }\n    }\n  }\n": types.GotchisByIdAndBlockDocument,
 };
 
 /**
@@ -34,6 +35,10 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query gotchisById($ids: [ID!]) {\n    aavegotchis(where: { id_in: $ids }) {\n      id\n      name\n      owner {\n        id\n      }\n      originalOwner {\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  query gotchisById($ids: [ID!]) {\n    aavegotchis(where: { id_in: $ids }) {\n      id\n      name\n      owner {\n        id\n      }\n      originalOwner {\n        id\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query gotchisByIdAndBlock($ids: [ID!], $block: Int) {\n    aavegotchis(where: { id_in: $ids }, block: { number: $block }) {\n      id\n      name\n      owner {\n        id\n      }\n      originalOwner {\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  query gotchisByIdAndBlock($ids: [ID!], $block: Int) {\n    aavegotchis(where: { id_in: $ids }, block: { number: $block }) {\n      id\n      name\n      owner {\n        id\n      }\n      originalOwner {\n        id\n      }\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

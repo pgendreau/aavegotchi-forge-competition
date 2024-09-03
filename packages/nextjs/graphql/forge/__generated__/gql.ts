@@ -14,6 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  query leaderboard($first: Int, $skip: Int) {\n    gotchis(first: $first, skip: $skip, orderBy: skillPoints, orderDirection: desc) {\n      id\n      __typename\n      totalItemsForged\n      totalItemsSmelted\n      skillPoints\n      smithingLevel\n      itemsForged(first: 1, orderBy: timestamp, orderDirection: desc) { timestamp }\n    }\n  }\n": types.LeaderboardDocument,
+    "\n  query leaderboardByBlock($first: Int, $skip: Int, $block: Int) {\n    gotchis(first: $first, skip: $skip, orderBy: skillPoints, orderDirection: desc, block: { number: $block }) {\n      id\n      __typename\n      totalItemsForged\n      totalItemsSmelted\n      skillPoints\n      smithingLevel\n      itemsForged(first: 1, orderBy: timestamp, orderDirection: desc) { timestamp }\n    }\n  }\n": types.LeaderboardByBlockDocument,
 };
 
 /**
@@ -34,6 +35,10 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query leaderboard($first: Int, $skip: Int) {\n    gotchis(first: $first, skip: $skip, orderBy: skillPoints, orderDirection: desc) {\n      id\n      __typename\n      totalItemsForged\n      totalItemsSmelted\n      skillPoints\n      smithingLevel\n      itemsForged(first: 1, orderBy: timestamp, orderDirection: desc) { timestamp }\n    }\n  }\n"): (typeof documents)["\n  query leaderboard($first: Int, $skip: Int) {\n    gotchis(first: $first, skip: $skip, orderBy: skillPoints, orderDirection: desc) {\n      id\n      __typename\n      totalItemsForged\n      totalItemsSmelted\n      skillPoints\n      smithingLevel\n      itemsForged(first: 1, orderBy: timestamp, orderDirection: desc) { timestamp }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query leaderboardByBlock($first: Int, $skip: Int, $block: Int) {\n    gotchis(first: $first, skip: $skip, orderBy: skillPoints, orderDirection: desc, block: { number: $block }) {\n      id\n      __typename\n      totalItemsForged\n      totalItemsSmelted\n      skillPoints\n      smithingLevel\n      itemsForged(first: 1, orderBy: timestamp, orderDirection: desc) { timestamp }\n    }\n  }\n"): (typeof documents)["\n  query leaderboardByBlock($first: Int, $skip: Int, $block: Int) {\n    gotchis(first: $first, skip: $skip, orderBy: skillPoints, orderDirection: desc, block: { number: $block }) {\n      id\n      __typename\n      totalItemsForged\n      totalItemsSmelted\n      skillPoints\n      smithingLevel\n      itemsForged(first: 1, orderBy: timestamp, orderDirection: desc) { timestamp }\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

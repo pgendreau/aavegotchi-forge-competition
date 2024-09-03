@@ -5,8 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { request } from "graphql-request";
 import { NextPage } from "next";
 import Button from "~~/components/layout/Button";
-import { Footer } from "~~/components/layout/Footer";
-import { Header } from "~~/components/layout/Header";
+import { Loader } from "~~/components/layout/Loader";
 import { Ttable } from "~~/components/layout/table/Ttable";
 import { Ttd } from "~~/components/layout/table/Ttd";
 import { Tth } from "~~/components/layout/table/Tth";
@@ -71,42 +70,48 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <Header />
-      <Ttable>
-        <thead className="border-2 border-frame">
-          <tr>
-            <Tth>Rank</Tth>
-            <Tth>Name</Tth>
-            <Tth>Level</Tth>
-            <Tth>Points</Tth>
-            <Tth>Owner</Tth>
-          </tr>
-        </thead>
-        <tbody className="border-2 border-frame">
-          {gotchiEntries.map((gotchi, index) => (
-            <tr key={gotchi.id} className="border-y border-y-slate-700">
-              <Ttd>{skip + index + 1}</Ttd>
-              <Ttd>{gotchi.name}</Ttd>
-              <Ttd>{gotchi.smithingLevel}</Ttd>
-              <Ttd>{gotchi.skillPoints}</Ttd>
-              <Ttd>
-                <Address
-                  address={gotchi.owner}
-                  disableAddressLink
-                  format="short"
-                  size="lg"
-                  disableAddressCopy
-                ></Address>
-              </Ttd>
-            </tr>
-          ))}
-        </tbody>
-      </Ttable>
-      <div className="flex flex-row gap-x-1 pt-3">
-        {skip >= 50 && <Button onClick={() => setSkip(skip - 50)}>Previous</Button>}
-        {gotchiEntries.length === 50 && <Button onClick={() => setSkip(skip + 50)}>Next</Button>}
-      </div>
-      <Footer />
+      {leaderboardEntries.isLoading || gotchis.isLoading ? (
+        <div className="flex flex-row justify-center">
+          <Loader />
+        </div>
+      ) : (
+        <>
+          <Ttable>
+            <thead className="border-2 border-frame">
+              <tr>
+                <Tth>Rank</Tth>
+                <Tth>Name</Tth>
+                <Tth className="hidden md:block">Level</Tth>
+                <Tth>Points</Tth>
+                <Tth className="hidden md:block">Owner</Tth>
+              </tr>
+            </thead>
+            <tbody className="border-2 border-frame">
+              {gotchiEntries.map((gotchi, index) => (
+                <tr key={gotchi.id} className="border-y border-y-slate-700">
+                  <Ttd>{skip + index + 1}</Ttd>
+                  <Ttd>{gotchi.name}</Ttd>
+                  <Ttd className="hidden md:block">{gotchi.smithingLevel}</Ttd>
+                  <Ttd>{gotchi.skillPoints}</Ttd>
+                  <Ttd className="hidden md:block">
+                    <Address
+                      address={gotchi.owner}
+                      disableAddressLink
+                      format="short"
+                      size="lg"
+                      disableAddressCopy
+                    ></Address>
+                  </Ttd>
+                </tr>
+              ))}
+            </tbody>
+          </Ttable>
+          <div className="flex flex-row gap-x-1 pt-3">
+            {skip >= 50 && <Button onClick={() => setSkip(skip - 50)}>Previous</Button>}
+            {gotchiEntries.length === 50 && <Button onClick={() => setSkip(skip + 50)}>Next</Button>}
+          </div>
+        </>
+      )}
     </>
   );
 };

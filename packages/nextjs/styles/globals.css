@@ -35,4 +35,11 @@ p {
   @apply hover:underline hover:text-frame;
 }
 
+.navbtn {
+  @apply rounded-sm px-4 py-1.5 text-2xl font-semibold text-white shadow-sm hover:bg-frame focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 border-2 border-frame;
+}
+.loader {
+  @apply rounded-sm px-4 py-2 text-2xl font-semibold text-white shadow-sm bg-frame;
+} 
+
 

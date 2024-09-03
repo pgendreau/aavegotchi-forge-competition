@@ -13,3 +13,17 @@ export const leaderboardQueryDocument = graphql(/* GraphQl */ `
     }
   }
 `);
+
+export const leaderboardQueryByBlockDocument = graphql(/* GraphQl */ `
+  query leaderboardByBlock($first: Int, $skip: Int, $block: Int) {
+    gotchis(first: $first, skip: $skip, orderBy: skillPoints, orderDirection: desc, block: { number: $block }) {
+      id
+      __typename
+      totalItemsForged
+      totalItemsSmelted
+      skillPoints
+      smithingLevel
+      itemsForged(first: 1, orderBy: timestamp, orderDirection: desc) { timestamp }
+    }
+  }
+`);
