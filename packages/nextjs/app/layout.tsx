@@ -27,6 +27,17 @@ const pixelar = localFont({
   variable: "--pixelar",
 });
 
+
+declare global {
+  interface BigInt {
+    toJSON(): string;
+  }
+}
+
+BigInt.prototype.toJSON = function () {
+  return this.toString()
+}
+
 const queryClient = new QueryClient();
 
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
@@ -37,8 +48,8 @@ const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
         <WagmiProvider config={wagmiConfig}>
           <QueryClientProvider client={queryClient}>
             <RainbowKitProvider avatar={BlockieAvatar} theme={lightTheme()}>
-              <div className="flex flex-col min-h-screen justify-center text-lg text-white font-medium bg-gradient-to-t from-[#1a1932] to-[#0e071b]">
-                <div className="container-md mb-auto pt-10 mx-1 md:mx-10 lg:mx-auto">
+              <div className="flex flex-col min-h-screen justify-center text-xl text-white font-medium bg-gradient-to-t from-[#1a1932] to-[#0e071b]">
+                <div className="container-lg mb-auto pt-10 mx-auto">
                   <div className="mx-5">
                     <Header />
                     <NavBar />

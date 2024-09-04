@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useQuery } from "@tanstack/react-query";
 import { request } from "graphql-request";
+import Button from "~~/components/layout/Button";
 import { getS1RewardsMatrix } from "~~/consts/rewards";
 import { GotchisByIdAndBlockQuery } from "~~/graphql/aavegotchis/__generated__/graphql";
 import { gotchisByIdAndBlockQueryDocument } from "~~/graphql/aavegotchis/queries/gotchis";
 import { LeaderboardByBlockQuery } from "~~/graphql/forge/__generated__/graphql";
 import { leaderboardQueryByBlockDocument } from "~~/graphql/forge/queries/smithoors";
+import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth/useScaffoldWriteContract";
 import { GotchiEntry } from "~~/types/gotchiEntry";
-// import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth/useScaffoldWriteContract";
-import Button from "~~/components/layout/Button";
 
 const Distribute = () => {
   const [blockNumber, setBlockNumber] = useState<number>(0);
@@ -99,8 +99,23 @@ const Distribute = () => {
       ]);
   }, [leaderboardEntries.data, gotchis.data]);
 
-  // const { writeContractAsync: writeYourContractAsync } = useScaffoldWriteContract("DistributePrizes");
-
+  const { writeContractAsync: writeYourContractAsync } = useScaffoldWriteContract("DistributePrizes");
+  const forgeIds = [
+    BigInt(1),
+    BigInt(2),
+    BigInt(3),
+    BigInt(4),
+    BigInt(5),
+    BigInt(6),
+    BigInt(7),
+    BigInt(8),
+    BigInt(9),
+    BigInt(10),
+    BigInt(11),
+    BigInt(12),
+    BigInt(13),
+    BigInt(14),
+  ];
   return (
     <div>
       <h2 className="text-4xl">Season 1 rewards distribution</h2>
@@ -109,13 +124,25 @@ const Distribute = () => {
       <div className="flex flex-col gap-y-2">
         {gotchiEntries.map((entries, index) => (
           <div key={index}>
-            <div className="flex flex-row justify-between gap-x-1 py-1">  
+            <div className="flex flex-row justify-between gap-x-1 py-1">
               <span className="text-4xl">Tx {index + 1}</span>
               <Button
-                onClick={() => {
-                  // writeYourContractAsync({ data: { gotchiEntries: entries } });
+                onClick={async () => {
+                  const response = await writeYourContractAsync({
+                    functionName: "distribute",
+                    args: [
+                      process.env.NEXT_PUBLIC_FORGE_ADDRESS,
+                      entries.map(e => e.owner),
+                      forgeIds,
+                      entries.map(e => e.rewardsMatrix ? e.rewardsMatrix?.map(i => (i ? BigInt(1) : BigInt(0))): []),
+                      "0x",
+                    ],
+                  });
+                  console.log(response);
                 }}
-              >Distribute Batch {index + 1}</Button>                
+              >
+                Distribute Batch {index + 1}
+              </Button>
             </div>
             <ul>
               {entries.map(entry => (

@@ -17,6 +17,7 @@ describe("DistributePrizes", function () {
   // We define a fixture to reuse the same setup in every test.
   async function deployDistributePrizesFixture() {
     const urlAlchemyPolygon = process.env.URL_ALCHEMY_POLYGON;
+    console.log("urlAlchemyPolygon: ", urlAlchemyPolygon);
     const ForgeDiamondAddress = "0x4fDfc1B53Fd1D80d969C984ba7a8CE4c7bAaD442";
     const ForgeDiamondOwnerAddress = "0x01F010a5e001fe9d6940758EA5e8c777885E351e";
 

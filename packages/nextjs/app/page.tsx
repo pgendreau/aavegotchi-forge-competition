@@ -98,7 +98,7 @@ const Home: NextPage = () => {
                       address={gotchi.owner}
                       disableAddressLink
                       format="short"
-                      size="lg"
+                      size="xl"
                       disableAddressCopy
                     ></Address>
                   </Ttd>

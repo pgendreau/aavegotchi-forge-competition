@@ -25,9 +25,9 @@ const blockieSizeMap = {
   sm: 4,
   base: 4,
   lg: 4,
-  xl: 7,
-  "2xl": 9,
-  "3xl": 12,
+  xl: 4,
+  "2xl": 6,
+  "3xl": 8,
 };
 
 /**
