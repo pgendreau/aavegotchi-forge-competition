@@ -14,12 +14,18 @@ interface ButtonProps extends BaseButtonAttributes {
   leftIcon?: React.ReactElement;
   rightIcon?: React.ReactElement;
   className?: string;
+  blueBorder?: boolean;
 }
 
 const Button = forwardRef<Ref, ButtonProps>((props, ref) => {
   Button.displayName = "Button";  
   // destructure neccesary props
-  const { type, children, disabled, isLoading, leftIcon, rightIcon, className, ...rest } = props;
+  const { type, children, disabled, isLoading, leftIcon, rightIcon, ...rest } = props;
+  let { className } = props;
+  
+  if (props.blueBorder) {
+    className = `${className} border-2 border-frame`;
+  }
 
   // determine icon placement
   const { newIcon: icon, iconPlacement } = useMemo(() => {
@@ -62,11 +68,12 @@ const Button = forwardRef<Ref, ButtonProps>((props, ref) => {
 // set default props
 Button.defaultProps = {
   className:
-    "rounded-sm px-2.5 py-1.5 text-xl font-semibold text-white shadow-sm hover:bg-frame focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600",
+    "px-3 py-1 text-xl font-semibold text-white shadow-sm hover:bg-frame focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600",
   isLoading: false,
   disabled: false,
   leftIcon: undefined,
   rightIcon: undefined,
+  blueBorder: false,
 };
 
 export default Button;

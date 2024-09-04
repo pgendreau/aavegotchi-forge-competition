@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { request } from "graphql-request";
 import { NextPage } from "next";
-import Button from "~~/components/layout/Button";
+import { ChevronDoubleLeftIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { Loader } from "~~/components/layout/Loader";
 import { Ttable } from "~~/components/layout/table/Ttable";
 import { Ttd } from "~~/components/layout/table/Ttd";
@@ -86,7 +86,7 @@ const Home: NextPage = () => {
                 <Tth className="hidden md:block">Owner</Tth>
               </tr>
             </thead>
-            <tbody className="border-2 border-frame">
+            <tbody className="border-2 border-b-0 border-frame">
               {gotchiEntries.map((gotchi, index) => (
                 <tr key={gotchi.id} className="border-y border-y-slate-700">
                   <Ttd>{skip + index + 1}</Ttd>
@@ -106,9 +106,37 @@ const Home: NextPage = () => {
               ))}
             </tbody>
           </Ttable>
-          <div className="flex flex-row gap-x-1 pt-3">
-            {skip >= 50 && <Button onClick={() => setSkip(skip - 50)}>Previous</Button>}
-            {gotchiEntries.length === 50 && <Button onClick={() => setSkip(skip + 50)}>Next</Button>}
+          <div className="grid grid-cols-12">
+            <div className="border-t-2 border-frame" />
+            <div className="col-span-10 border-2 border-t-0 border-frame">
+              <div className="flex flex-row py-4 justify-center">
+                {skip >= 50 && (
+                  <button onClick={() => setSkip(0)} className="mybtn mybtn-border">
+                    <div className="flex flex-row items-center gap-x-1">
+                      <ChevronDoubleLeftIcon className="h-5 w-5" />
+                      <span>First</span>
+                    </div>
+                  </button>
+                )}
+                {skip >= 50 && (
+                  <button onClick={() => setSkip(skip - 50)} className="mybtn mybtn-border">
+                    <div className="flex flex-row items-center gap-x-1">
+                      <ChevronLeftIcon className="h-5 w-5" />
+                      <span>Previous</span>
+                    </div>
+                  </button>
+                )}
+                {gotchiEntries.length === 50 && (
+                  <button onClick={() => setSkip(skip + 50)} className="mybtn mybtn-border">
+                    <div className="flex flex-row items-center gap-x-1">
+                      <span>Next</span>
+                      <ChevronRightIcon className="h-5 w-5" />
+                    </div>
+                  </button>
+                )}
+              </div>
+            </div>
+            <div className="border-t-2 border-frame" />
           </div>
         </>
       )}

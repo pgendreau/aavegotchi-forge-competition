@@ -85,7 +85,7 @@ const deployedContracts = {
   },
   31337: {
     DistributePrizes: {
-      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      address: "0x4507BF58E135eDD74df1A7288B3E5582185D52dA",
       abi: [
         {
           anonymous: false,
