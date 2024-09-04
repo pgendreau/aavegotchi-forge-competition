@@ -10,6 +10,8 @@ import { gotchisByIdAndBlockQueryDocument } from "~~/graphql/aavegotchis/queries
 import { LeaderboardByBlockQuery } from "~~/graphql/forge/__generated__/graphql";
 import { leaderboardQueryByBlockDocument } from "~~/graphql/forge/queries/smithoors";
 import { GotchiEntry } from "~~/types/gotchiEntry";
+// import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth/useScaffoldWriteContract";
+import Button from "~~/components/layout/Button";
 
 const Distribute = () => {
   const [blockNumber, setBlockNumber] = useState<number>(0);
@@ -17,7 +19,7 @@ const Distribute = () => {
     queryKey: ["polygon_block"],
     queryFn: async () => {
       const response = await fetch(
-        `https://api.polygonscan.com/api?module=proxy&action=eth_blockNumber&apikey=${process.env.NEXT_PUBLIC_POLYGONSCAN_API_KEY}`,
+        `https://api.polygonscan.com/api?module=proxy&action=eth_blockNumber&apikey=${process.env.NEXT_PUBLIC_POLYGONSCAN_API}`,
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -97,15 +99,24 @@ const Distribute = () => {
       ]);
   }, [leaderboardEntries.data, gotchis.data]);
 
+  // const { writeContractAsync: writeYourContractAsync } = useScaffoldWriteContract("DistributePrizes");
+
   return (
     <div>
       <h2 className="text-4xl">Season 1 rewards distribution</h2>
       <p>Block used for snapshot: {process.env.NEXT_PUBLIC_SNAPSHOT_BLOCK_NUMBER}</p>
       <ConnectButton />
-      <div className="flex flex-col gap-y-1 font-kanit font-2xl">
+      <div className="flex flex-col gap-y-2">
         {gotchiEntries.map((entries, index) => (
-          <>
-            <p className="text-4xl">Tx {index + 1}</p>
+          <div key={index}>
+            <div className="flex flex-row justify-between gap-x-1 py-1">  
+              <span className="text-4xl">Tx {index + 1}</span>
+              <Button
+                onClick={() => {
+                  // writeYourContractAsync({ data: { gotchiEntries: entries } });
+                }}
+              >Distribute Batch {index + 1}</Button>                
+            </div>
             <ul>
               {entries.map(entry => (
                 <li key={entry.id}>
@@ -113,7 +124,7 @@ const Distribute = () => {
                 </li>
               ))}
             </ul>
-          </>
+          </div>
         ))}
       </div>
     </div>

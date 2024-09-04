@@ -19,7 +19,7 @@ const Season1 = () => {
     queryKey: ["polygon_block"],
     queryFn: async () => {
       const response = await fetch(
-        `https://api.polygonscan.com/api?module=proxy&action=eth_blockNumber&apikey=${process.env.NEXT_PUBLIC_POLYGONSCAN_API_KEY}`,
+        `https://api.polygonscan.com/api?module=proxy&action=eth_blockNumber&apikey=${process.env.NEXT_PUBLIC_POLYGONSCAN_API}`,
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
