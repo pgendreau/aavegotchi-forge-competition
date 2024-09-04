@@ -79,7 +79,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--pixelar)']
+        sans: ["var(--pixelar)"],
       },
       boxShadow: {
         center: "0 0 12px -2px rgb(0 0 0 / 0.05)",
@@ -89,19 +89,16 @@ module.exports = {
       },
       colors: {
         frame: "#0098dc",
-        common: '#7e69fa',
-        uncommon: '#99dbe5',
-        rare: '#59bcff',
-        legendary: '#ffc36b',
-        mythical: '#ff96ff',
-      }
+        common: "#7e69fa",
+        uncommon: "#99dbe5",
+        rare: "#59bcff",
+        legendary: "#ffc36b",
+        mythical: "#ff96ff",
+      },
+      backgroundImage: {
+        footer: "url('/images/footer.png')",
+      },
     },
   },
-  safelist: [
-    "text-common",
-    "text-uncommon",
-    "text-rare",
-    "text-legendary",
-    "text-mythical",
-  ]
+  safelist: ["text-common", "text-uncommon", "text-rare", "text-legendary", "text-mythical"],
 };

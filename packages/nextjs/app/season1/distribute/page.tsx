@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useQuery } from "@tanstack/react-query";
 import { request } from "graphql-request";
-import Button from "~~/components/layout/Button";
 import { getS1RewardsMatrix } from "~~/consts/rewards";
 import { GotchisByIdAndBlockQuery } from "~~/graphql/aavegotchis/__generated__/graphql";
 import { gotchisByIdAndBlockQueryDocument } from "~~/graphql/aavegotchis/queries/gotchis";
@@ -126,7 +125,8 @@ const Distribute = () => {
           <div key={index}>
             <div className="flex flex-row justify-between gap-x-1 py-1">
               <span className="text-4xl">Tx {index + 1}</span>
-              <Button
+              <button
+                className="mybtn mybtn-border"
                 onClick={async () => {
                   const response = await writeYourContractAsync({
                     functionName: "distribute",
@@ -134,7 +134,7 @@ const Distribute = () => {
                       process.env.NEXT_PUBLIC_FORGE_ADDRESS,
                       entries.map(e => e.owner),
                       forgeIds,
-                      entries.map(e => e.rewardsMatrix ? e.rewardsMatrix?.map(i => (i ? BigInt(1) : BigInt(0))): []),
+                      entries.map(e => (e.rewardsMatrix ? e.rewardsMatrix?.map(i => (i ? BigInt(1) : BigInt(0))) : [])),
                       "0x",
                     ],
                   });
@@ -142,7 +142,7 @@ const Distribute = () => {
                 }}
               >
                 Distribute Batch {index + 1}
-              </Button>
+              </button>
             </div>
             <ul>
               {entries.map(entry => (
