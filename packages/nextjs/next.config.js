@@ -14,6 +14,7 @@ const nextConfig = {
     config.externals.push("pino-pretty", "lokijs", "encoding");
     return config;
   },
+  // Opened CORS for compatibility with safe apps mode.
   async headers() {
     return [
       { 
