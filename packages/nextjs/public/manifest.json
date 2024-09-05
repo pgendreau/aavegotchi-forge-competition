@@ -1,5 +1,5 @@
 {
-  "name": "Scaffold-ETH 2 DApp",
-  "description": "A DApp built with Scaffold-ETH",
-  "iconPath": "logo.svg"
+  "name": "Forge Leaderboard",
+  "description": "A Dapp to track the top smithoors and manage rewards distribution",
+  "iconPath": "aavegotchi.png"
 }

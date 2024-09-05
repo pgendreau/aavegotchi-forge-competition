@@ -14,6 +14,8 @@ export const Footer = () => {
           <DiscordProfile id="745967743949602818" name="Oliver Spoon" />
           <DiscordProfile id="276081752236097536" name="FiFoOoO" />
           <DiscordProfile id="829312065437040730" name="PG" />
+          <a href='/season1/distribute' className="w-2 h-2"/>
+  
         </div>
       </div>
     </div>
