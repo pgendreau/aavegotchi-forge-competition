@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
 dotenv.config();
-import { HardhatUserConfig } from "hardhat/config";
+import { extendEnvironment, HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-ethers";
 import "@nomicfoundation/hardhat-chai-matchers";
 import "@typechain/hardhat";
@@ -9,6 +9,7 @@ import "solidity-coverage";
 import "@nomicfoundation/hardhat-verify";
 import "hardhat-deploy";
 import "hardhat-deploy-ethers";
+import "hardhat-ethernal";
 
 // If not set, it uses ours Alchemy's default API key.
 // You can get your own at https://dashboard.alchemyapi.io
@@ -50,6 +51,7 @@ const config: HardhatUserConfig = {
         enabled: process.env.MAINNET_FORKING_ENABLED === "true",
         timeout: 3600000,
       },
+      gas: "auto",
     },
     mainnet: {
       url: `https://eth-mainnet.alchemyapi.io/v2/${providerApiKey}`,
@@ -139,6 +141,13 @@ const config: HardhatUserConfig = {
   },
   mocha: {
     timeout: 3600000,
+  },
+  ethernal: {
+    workspace: "hardhat_forge_rewards",
+    disableSync: false,
+    disableTrace: false,
+    uploadAst: true,
+    disabled: false,
   },
 };
 

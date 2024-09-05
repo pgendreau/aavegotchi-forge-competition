@@ -53,6 +53,7 @@
     "@typechain/ethers-v6": "^0.5.1",
     "dotenv": "^16.0.3",
     "envfile": "^6.18.0",
+    "hardhat-ethernal": "^3.2.5",
     "qrcode": "^1.5.1"
   }
 }
