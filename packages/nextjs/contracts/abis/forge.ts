@@ -1,6 +1,6 @@
 import { Abi } from "abitype";
 
-export const forgeAbi:Abi = [
+export const forgeAbi: Abi = [
   {
     anonymous: false,
     inputs: [
@@ -188,4 +188,4 @@ export const forgeAbi:Abi = [
     stateMutability: "view",
     type: "function",
   },
-]
+];

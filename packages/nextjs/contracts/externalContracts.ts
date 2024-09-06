@@ -1,5 +1,5 @@
-import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 import { forgeAbi } from "./abis/forge";
+import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 /**
  * @example

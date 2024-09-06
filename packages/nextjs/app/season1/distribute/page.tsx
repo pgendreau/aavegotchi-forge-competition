@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { request } from "graphql-request";
 import { useWriteContract } from "wagmi";
 import { getS1RewardsMatrix } from "~~/consts/rewards";
+import { forgeAbi } from "~~/contracts/abis/forge";
 import deployedContracts from "~~/contracts/deployedContracts";
 import { GotchisByIdAndBlockQuery } from "~~/graphql/aavegotchis/__generated__/graphql";
 import { gotchisByIdAndBlockQueryDocument } from "~~/graphql/aavegotchis/queries/gotchis";
@@ -13,7 +14,6 @@ import { LeaderboardByBlockQuery } from "~~/graphql/forge/__generated__/graphql"
 import { leaderboardQueryByBlockDocument } from "~~/graphql/forge/queries/smithoors";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth/useScaffoldWriteContract";
 import { GotchiEntry } from "~~/types/gotchiEntry";
-import { forgeAbi } from "~~/contracts/abis/forge";
 
 const Distribute = () => {
   const [blockNumber, setBlockNumber] = useState<number>(0);
