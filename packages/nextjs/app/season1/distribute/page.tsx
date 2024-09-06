@@ -125,20 +125,22 @@ const Distribute = () => {
       <h2 className="text-4xl">Season 1 rewards distribution</h2>
       <p>Block used for snapshot: {process.env.NEXT_PUBLIC_SNAPSHOT_BLOCK_NUMBER}</p>
       <ConnectButton />
-      <button
-        className="mybtn mybtn-border"
-        onClick={async () => {
-          const response = await writeForgeContractAsync({
-            address: process.env.NEXT_PUBLIC_FORGE_ADDRESS,
-            abi: forgeAbi,
-            functionName: "setApprovalForAll",
-            args: [deployedContracts[31337].DistributePrizes.address, true],
-          });
-          console.log(response);
-        }}
-      >
-        Approve all transfers
-      </button>
+      <div className="pt-4">
+        <button
+          className="mybtn mybtn-border"
+          onClick={async () => {
+            const response = await writeForgeContractAsync({
+              address: process.env.NEXT_PUBLIC_FORGE_ADDRESS,
+              abi: forgeAbi,
+              functionName: "setApprovalForAll",
+              args: [deployedContracts[31337].DistributePrizes.address, true],
+            });
+            console.log(response);
+          }}
+        >
+          Approve all transfers
+        </button>
+      </div>
       <div className="flex flex-col gap-y-2">
         {gotchiEntries.map((entries, index) => (
           <div key={index}>

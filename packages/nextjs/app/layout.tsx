@@ -10,7 +10,7 @@ import { getMetadata } from "~~/utils/scaffold-eth/getMetadata";
 export const metadata = getMetadata({
   title: "Aavegotchi Forge Leaderboard",
   description: "'Check your aavegotchi's blacksmithing rank and compete to win prizes",
-  imageRelativePath: "/images/header.jpg",
+  // imageRelativePath: "/images/banner.png",
 });
 
 const pixelar = localFont({
