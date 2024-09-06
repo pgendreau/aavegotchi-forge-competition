@@ -8,5 +8,6 @@ namespace NodeJS {
     NEXT_PUBLIC_POLYGONSCAN_API: string;
     NEXT_PUBLIC_SNAPSHOT_BLOCK_NUMBER: string;
     NEXT_PUBLIC_FORGE_ADDRESS: string;
+    NEXT_PUBLIC_APP_URL: string;
   }
 }
