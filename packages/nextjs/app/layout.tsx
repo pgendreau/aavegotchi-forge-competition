@@ -33,8 +33,6 @@ BigInt.prototype.toJSON = function () {
   return this.toString();
 };
 
-
-
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
   return (
     <html suppressHydrationWarning className={`${pixelar.variable} font-sans `}>
