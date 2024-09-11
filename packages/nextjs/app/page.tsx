@@ -80,6 +80,7 @@ const Home: NextPage = () => {
             <thead className="border-2 border-frame">
               <tr>
                 <Tth>Rank</Tth>
+                <Tth>Id</Tth>
                 <Tth>Name</Tth>
                 <Tth className="hidden md:block">Level</Tth>
                 <Tth>Points</Tth>
@@ -90,17 +91,12 @@ const Home: NextPage = () => {
               {gotchiEntries.map((gotchi, index) => (
                 <tr key={gotchi.id} className="border-y border-y-slate-700">
                   <Ttd>{skip + index + 1}</Ttd>
+                  <Ttd>{gotchi.id}</Ttd>
                   <Ttd>{gotchi.name}</Ttd>
                   <Ttd className="hidden md:block">{gotchi.smithingLevel}</Ttd>
                   <Ttd>{gotchi.skillPoints}</Ttd>
                   <Ttd className="hidden md:block">
-                    <Address
-                      address={gotchi.owner}
-                      disableAddressLink
-                      format="short"
-                      size="xl"
-                      disableAddressCopy
-                    ></Address>
+                    <Address address={gotchi.owner} format="short" size="xl"></Address>
                   </Ttd>
                 </tr>
               ))}

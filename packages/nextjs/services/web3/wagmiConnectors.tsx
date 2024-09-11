@@ -1,6 +1,7 @@
 import { connectorsForWallets } from "@rainbow-me/rainbowkit";
 import {
   coinbaseWallet,
+  frameWallet,
   ledgerWallet,
   metaMaskWallet,
   rainbowWallet,
@@ -20,6 +21,7 @@ const wallets = [
   coinbaseWallet,
   rainbowWallet,
   safeWallet,
+  frameWallet,
   ...(!targetNetworks.some(network => network.id !== (chains.hardhat as chains.Chain).id) || !onlyLocalBurnerWallet
     ? [rainbowkitBurnerWallet]
     : []),

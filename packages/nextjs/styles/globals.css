@@ -50,4 +50,6 @@ p {
   @apply border-2 border-frame
 }
 
-
+.disclaimer {
+  @apply text-2xl animate-pulse underline text-sky-100
+}

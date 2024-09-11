@@ -10,7 +10,6 @@ import { useEnsAvatar, useEnsName } from "wagmi";
 import { CheckCircleIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import { BlockieAvatar } from "~~/components/scaffold-eth";
 import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
-import { getBlockExplorerAddressLink } from "~~/utils/scaffold-eth";
 
 type AddressProps = {
   address?: AddressType;
@@ -82,7 +81,8 @@ export const Address = ({ address, disableAddressLink, format, size = "base", di
     return <span className="text-error">Wrong address</span>;
   }
 
-  const blockExplorerAddressLink = getBlockExplorerAddressLink(targetNetwork, checkSumAddress);
+  //const blockExplorerAddressLink = getBlockExplorerAddressLink(targetNetwork, checkSumAddress);
+  const aavegotchichiDappAddressLink = `https://dapp.aavegotchi.com/u/${checkSumAddress}/inventory?itemType=all`;
   let displayAddress = checkSumAddress?.slice(0, 6) + "..." + checkSumAddress?.slice(-4);
 
   if (ens) {
@@ -104,13 +104,13 @@ export const Address = ({ address, disableAddressLink, format, size = "base", di
         <span className={`ml-1.5 text-${size} font-normal`}>{displayAddress}</span>
       ) : targetNetwork.id === hardhat.id ? (
         <span className={`ml-1.5 text-${size} font-normal`}>
-          <Link href={blockExplorerAddressLink}>{displayAddress}</Link>
+          <Link href={aavegotchichiDappAddressLink}>{displayAddress}</Link>
         </span>
       ) : (
         <a
           className={`ml-1.5 text-${size} font-normal`}
           target="_blank"
-          href={blockExplorerAddressLink}
+          href={aavegotchichiDappAddressLink}
           rel="noopener noreferrer"
         >
           {displayAddress}
