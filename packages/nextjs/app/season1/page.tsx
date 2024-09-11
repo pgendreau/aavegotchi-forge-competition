@@ -92,17 +92,20 @@ const Season1 = () => {
 
   return (
     <>
-      {leaderboardEntries.isLoading || gotchis.isLoading ? (
-        <div className="flex flex-row justify-center">
+      <div className="flex flex-col items-center gap-y-1 pb-4">
+        <p className="my-0 disclaimer">All rewards listed on that page are schematics.</p>
+      </div>
+      <div className="flex flex-row justify-center">
+        {leaderboardEntries.isLoading || gotchis.isLoading ? (
           <Loader />
-        </div>
-      ) : (
-        <ul className="w-full lg:w-[48rem]">
-          {gotchiEntries.map((gotchiEntry, index) => (
-            <ListItem key={index} item={gotchiEntry} index={index} />
-          ))}
-        </ul>
-      )}
+        ) : (
+          <ul className="w-full lg:w-[48rem]">
+            {gotchiEntries.map((gotchiEntry, index) => (
+              <ListItem key={index} item={gotchiEntry} index={index} />
+            ))}
+          </ul>
+        )}
+      </div>
     </>
   );
 };
