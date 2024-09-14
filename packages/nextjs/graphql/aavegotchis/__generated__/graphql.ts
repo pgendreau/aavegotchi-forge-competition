@@ -4358,7 +4358,7 @@ export enum Portal_OrderBy {
   ClaimedAt = 'claimedAt',
   ClaimedTime = 'claimedTime',
   Gotchi = 'gotchi',
-  GotchiActiveListing = 'gotchi__activeListing',
+    GotchiActiveListing = 'gotchi__activeListing',
   GotchiBaseRarityScore = 'gotchi__baseRarityScore',
   GotchiClaimedAt = 'gotchi__claimedAt',
   GotchiClaimedTime = 'gotchi__claimedTime',

@@ -4,7 +4,7 @@ import { graphql } from "../__generated__";
 
 export const leaderboardQueryDocument = graphql(/* GraphQl */ `
   query leaderboard($first: Int, $skip: Int) {
-    gotchis(first: $first, skip: $skip, orderBy: skillPoints, orderDirection: desc, where: { id_not: 18760 }) {
+    gotchis(first: $first, skip: $skip, orderBy: skillPoints, orderDirection: desc, where: { id_not_in: [18760, 15099, 11339] }) {
       id
       __typename
       totalItemsForged
@@ -26,7 +26,7 @@ export const leaderboardQueryByBlockDocument = graphql(/* GraphQl */ `
       orderBy: skillPoints
       orderDirection: desc
       block: { number: $block }
-      where: { id_not: 18760 }
+      where: { id_not_in: [18760, 15099, 11339] }
     ) {
       id
       __typename
