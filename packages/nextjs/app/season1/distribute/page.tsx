@@ -133,7 +133,7 @@ const Distribute = () => {
               address: process.env.NEXT_PUBLIC_FORGE_ADDRESS,
               abi: forgeAbi,
               functionName: "setApprovalForAll",
-              args: [deployedContracts[31337].DistributePrizes.address, true],
+              args: [deployedContracts[137].DistributePrizes.address, true],
             });
             console.log(response);
           }}
