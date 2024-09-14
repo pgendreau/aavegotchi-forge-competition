@@ -105,20 +105,20 @@ const Distribute = () => {
   const { writeContractAsync: writeForgeContractAsync } = useWriteContract();
 
   const forgeIds = [
-    BigInt(1),
-    BigInt(2),
-    BigInt(3),
-    BigInt(4),
-    BigInt(5),
-    BigInt(6),
-    BigInt(7),
-    BigInt(8),
-    BigInt(9),
-    BigInt(10),
-    BigInt(11),
-    BigInt(12),
-    BigInt(13),
-    BigInt(14),
+    BigInt(404),
+    BigInt(405),
+    BigInt(406),
+    BigInt(407),
+    BigInt(408),
+    BigInt(409),
+    BigInt(410),
+    BigInt(411),
+    BigInt(412),
+    BigInt(413),
+    BigInt(414),
+    BigInt(415),
+    BigInt(416),
+    BigInt(417),
   ];
   return (
     <div>
